@@ -11,6 +11,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  successMessage: string = ''; 
 
   constructor(
     private router: Router,
@@ -19,10 +20,35 @@ export class LoginComponent {
 
   login() {
     this.firebaseAuthService.login(this.email, this.password)
-      .then(() => this.router.navigate(['/']))
+      .then(() => {
+        this.successMessage = 'You have logged in successfully! Redirecting...';
+        this.errorMessage = '';
+        console.log(this.successMessage);
+
+        // Redirect to home page after successful login
+        setTimeout(() => this.router.navigate(['/']), 3000);
+      })
       .catch(error => {
         this.errorMessage = error.message;
+        this.successMessage = '';
         console.error('Login error:', error);
+      });
+  }
+
+  googleSignIn() {
+    this.firebaseAuthService.signInWithGoogle()
+      .then(() => {
+        this.successMessage = 'You have signed in with Google successfully! Redirecting...';
+        this.errorMessage = '';
+        console.log(this.successMessage);
+
+        // Redirect to home page after successful Google Sign-In
+        setTimeout(() => this.router.navigate(['/']), 3000);
+      })
+      .catch(error => {
+        this.errorMessage = error.message;
+        this.successMessage = '';
+        console.error('Google Sign-in error:', error.message);
       });
   }
 

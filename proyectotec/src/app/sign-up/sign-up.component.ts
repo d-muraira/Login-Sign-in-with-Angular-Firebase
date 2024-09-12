@@ -21,9 +21,12 @@ export class SignUpComponent {
   signUp() {
     this.firebaseAuthService.signUp(this.email, this.password)
       .then((userCredential) => {
+        // User signed up successfully, store data in Firestore
         const userData = {
+          uid: userCredential.user?.uid,
           email: userCredential.user?.email,
-          password: this.password, 
+          password: this.password, // Just for the experiment
+          createdAt: new Date()
         };
 
         return this.firebaseAuthService.addDataToFirestore('Usuarios', userData);
@@ -39,6 +42,24 @@ export class SignUpComponent {
         this.errorMessage = error.message;
         this.successMessage = ''; 
         console.error('Sign-up error:', error.message);
+      });
+  }
+
+  // Method for Google Sign-In
+  googleSignIn() {
+    this.firebaseAuthService.signInWithGoogle()
+      .then(() => {
+        this.successMessage = 'You have signed in with Google successfully! Redirecting to login...';
+        this.errorMessage = '';
+        console.log(this.successMessage);
+        
+        // Redirect to the login page after a successful sign-in
+        setTimeout(() => this.router.navigate(['/login']), 3000);
+      })
+      .catch(error => {
+        this.errorMessage = error.message;
+        this.successMessage = '';
+        console.error('Google Sign-in error:', error.message);
       });
   }
 
