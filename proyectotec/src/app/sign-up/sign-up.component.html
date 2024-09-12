@@ -6,6 +6,7 @@
   <title>Sign Up Form</title>
   <link rel="stylesheet" href="estilos.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
   <div class="wrapper">
@@ -29,6 +30,13 @@
         {{ errorMessage }}
       </div>
       
+      <!-- Google Sign-In Button -->
+      <div class="social-login" style="margin-top: 15px;">
+        <button type="button" (click)="googleSignIn()" class="btn google-btn">
+          <i class='bx bxl-google'></i> Sign In with Google
+        </button>
+      </div>
+
       <div class="register-link">
         <p>Already have an account? <a (click)="goToLogin()">Login</a></p>
       </div>

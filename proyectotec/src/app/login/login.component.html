@@ -20,6 +20,22 @@
         <i class='bx bxs-lock-alt'></i>
       </div>
       <button type="submit" class="btn">Login</button>
+
+      <!-- Success and Error Messages -->
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      
+      <!-- Google Sign-In Button -->
+      <div class="social-login" style="margin-top: 15px;">
+        <button type="button" (click)="googleSignIn()" class="btn google-btn">
+          <i class='bx bxl-google'></i> Sign In with Google
+        </button>
+      </div>
+
       <div class="register-link">
         <p>Don't have an account? <a (click)="goToSignUp()">Register</a></p>
       </div>
