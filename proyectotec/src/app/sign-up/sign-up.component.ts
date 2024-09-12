@@ -20,12 +20,19 @@ export class SignUpComponent {
 
   signUp() {
     this.firebaseAuthService.signUp(this.email, this.password)
+      .then((userCredential) => {
+        const userData = {
+          email: userCredential.user?.email,
+          password: this.password, 
+        };
+
+        return this.firebaseAuthService.addDataToFirestore('Usuarios', userData);
+      })
       .then(() => {
         this.successMessage = 'You have signed up successfully! Redirecting to login...'; 
         this.errorMessage = ''; 
         console.log(this.successMessage); 
 
-        
         setTimeout(() => this.router.navigate(['/login']), 3000);
       })
       .catch(error => {
